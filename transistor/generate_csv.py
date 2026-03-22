@@ -23,8 +23,8 @@ def iv_to_list(iv: xr.DataArray, W: float, L: float) -> list[list]:
     # --- header ---
     rows.append(["AnalysisType", "IV"])
     rows.append(["ModelParams"])
-    rows.append(["GateWidth", W])
-    rows.append(["GateLength", L])
+    rows.append(["GateWidth", W*1e6, "um"])
+    rows.append(["GateLength", L*1e6, "um"])
     rows.append(["Variables"])
     rows.append(["Ids", "A", "target"])
     rows.append(["Vds", "V", "sweep"])
@@ -60,8 +60,8 @@ def transfer_to_list(transfer: xr.DataArray, W: float, L: float) -> list[list]:
     # --- header ---
     rows.append(["AnalysisType", "Transfer"])
     rows.append(["ModelParams"])
-    rows.append(["GateWidth", W])
-    rows.append(["GateLength", L])
+    rows.append(["GateWidth", W*1e6, "um"])
+    rows.append(["GateLength", L*1e6, "um"])
     rows.append(["Variables"])
     rows.append(["Ids", "A", "target"])
     rows.append(["Vds", "V", vds, "const"])
