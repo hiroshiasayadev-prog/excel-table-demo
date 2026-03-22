@@ -74,7 +74,7 @@ class Display:
             ))
 
         fig.update_layout(
-            title="I-V characteristics",
+            #title="I-V characteristics",
             xaxis_title="Vds [V]",
             yaxis_title="Id [A]",
             legend_title="Vgs",
