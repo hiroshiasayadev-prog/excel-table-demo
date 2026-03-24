@@ -3,10 +3,12 @@ name = "excel-table-demo"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
-    "excel-table>=0.1.2",
+    "excel-table==0.1.6",
     "plotly>=6.6.0",
     "streamlit>=1.55.0",
+    "funcexpr_xr>=0.1.2",
     "xarray>=2026.2.0",
+    "numpy>=2.4.3",
 ]

@@ -1,4 +1,3 @@
-# transistor/converter.py
 import numpy as np
 import xarray as xr
 from excel_table.models import Table2DFloat

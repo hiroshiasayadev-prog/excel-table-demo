@@ -1,4 +1,3 @@
-# pages/2_input_format.py
 """
 Page 2: Input Format Generation
 
