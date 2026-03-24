@@ -1,6 +1,6 @@
 # excel-table demo
 
-A demo app showing real-world usage of [excel-table](https://github.com/your-repo/excel-table) read/write.
+A demo app showing real-world usage of [excel-table](https://github.com/hiroshiasayadev-prog/excel-table) read/write.
 
 ## Use Case
 
@@ -22,17 +22,36 @@ W and L are entered in um.
 
 ### Page 2: Input Format Generation / excel-table write
 **Demonstrates excel-table write.**
-Enter sweep conditions and excel-table generates a blank input-format Excel file for download.
-Paste the CSV values from Page 1 into this Excel, then bring it to Page 3.
+Paste the axis ranges from Page 1's CSV. excel-table generates a blank input-format Excel file for download.
 
-### Page 3: Upload & Parse / excel-table read
+The following excel-table classes are used:
+
+- `SheetWriteSchema` — defines the grid layout of tables in the sheet
+- `TableKeyValue` — key-value table for device parameters (W, L)
+- `FormattedTable2D` — 2-D table for measurement data grids
+- `write_sheet_bytes` — renders the schema to in-memory `.xlsx` bytes
+
+### Page 3: Manual Data Entry
+Paste the measured values from the CSV (Page 1) into the Excel template (Page 2), then proceed to Page 4.
+
+### Page 4: Upload & Parse / excel-table read
 **Demonstrates excel-table read.**
-Upload the Excel filled in from Page 2 and parse it with excel-table.
+Upload the filled Excel from Page 3. excel-table parses the structured tables and returns typed Pydantic models.
+Results are displayed as current density [mA/mm].
 
-### Page 4: Visualization
-Visualize the parsed data.
-Drain current is normalized by gate width and plotted as current density [mA/mm].
+The following excel-table classes are used:
+
+- `SheetReadSchema` — declares the column structure of one logical row of tables
+- `TableKeyValueSchema` — schema for a flat key-value table
+- `FormattedTable2DSchema` — schema for a 2-D table; `table_type=Table2DFloat` auto-casts values to float
+- `read_sheet_bytes` — parses raw `.xlsx` bytes and returns `list[list[...]]`, one inner list per device
 
 ### Page 5: Excel Export / excel-table write
-**Demonstrates excel-table write.**
-Export the visualization results as an Excel file with embedded charts.
+**Demonstrates excel-table write with formatting and charts.**
+Computes current density and transconductance from the parsed data, then writes a formatted Excel report.
+
+The following excel-table classes are used:
+
+- `FormattedTable2D` with `value_conditional_formats` — color gradient on the Jd IV table
+- `ChartConfig` / `LineSeriesConfig` — Excel charts with per-series color gradients and dual Y axes
+- `write_sheet_bytes` — renders the full report to in-memory `.xlsx` bytes

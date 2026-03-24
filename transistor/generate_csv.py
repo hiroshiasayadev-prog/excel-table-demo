@@ -32,9 +32,9 @@ def iv_to_list(iv: xr.DataArray, W: float, L: float) -> list[list]:
 
     # --- data ---
     rows.append(["", "Vgs"] + [""] * (len(vgs_arr) - 1))
-    rows.append(["Vds"] + [f"{v:.2f}" for v in vgs_arr])
+    rows.append(["Vds"] + [v for v in vgs_arr])
     for vds in vds_arr:
-        row = [f"{vds:.2f}"]
+        row = [vds]
         for vgs in vgs_arr:
             row.append(f"{iv.sel(vgs=vgs, vds=vds).item():.6e}")
         rows.append(row)
@@ -71,7 +71,7 @@ def transfer_to_list(transfer: xr.DataArray, W: float, L: float) -> list[list]:
     rows.append(["", "Vgs"] + [""] * (len(sweep_labels) - 1))
     rows.append(["Vgs"] + list(sweep_labels))
     for vgs in vgs_arr:
-        row = [f"{vgs:.2f}"]
+        row = [vgs]
         for sweep in sweep_labels:
             row.append(f"{transfer.sel(sweep=sweep, vgs=vgs).item():.6e}")
         rows.append(row)

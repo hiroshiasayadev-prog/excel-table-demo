@@ -185,3 +185,90 @@ class Display:
             cls.generate_Transfer_map(transfer_data)
         )
         fig.show()
+
+    @classmethod
+    def generate_IV_density_map(cls, jd_data: xr.DataArray) -> str:
+        """generate I-V current density map as json for plotly.
+
+        jd_data must have the same structure as generate_IV_map,
+        but values in mA/mm (current density normalized by gate width).
+        """
+        fig = go.Figure()
+
+        vgs_arr = jd_data.coords["vgs"].values
+        for vgs in vgs_arr:
+            slice_ = jd_data.sel(vgs=vgs)
+            fig.add_trace(go.Scatter(
+                x=slice_.coords["vds"].values,
+                y=slice_.values,
+                mode="lines",
+                name=f"Vgs={vgs:.1f}V",
+                line=dict(color=PlotlyStyle.rdylgn_colorscale(
+                    axis=vgs_arr, value=vgs
+                )),
+            ))
+
+        fig.update_layout(
+            title="I-V characteristics (current density)",
+            xaxis_title="Vds [V]",
+            yaxis_title="Jd [mA/mm]",
+            legend_title="Vgs",
+        )
+
+        PlotlyStyle.apply_paper_style(fig)
+
+        fig_json = fig.to_json()
+        if not isinstance(fig_json, str):
+            raise Exception("Fuck")
+        return fig_json
+
+    @classmethod
+    def generate_Transfer_density_map(cls, jd_data: xr.DataArray) -> str:
+        """generate Transfer current density map as json for plotly.
+
+        jd_data must have the same structure as generate_Transfer_map,
+        but values in mA/mm. gm is derived as d(Jd)/d(Vgs) [mS/mm].
+        """
+        fig = go.Figure()
+
+        style = {
+            "forward":  dict(dash="solid"),
+            "backward": dict(dash="dash"),
+        }
+
+        for sweep in jd_data.coords["sweep"].values:
+            slice_ = jd_data.sel(sweep=sweep)
+            vgs = slice_.coords["vgs"].values
+            jd_ = slice_.values
+            gm = np.gradient(jd_, vgs)
+
+            fig.add_trace(go.Scatter(
+                x=vgs, y=jd_,
+                mode="lines",
+                name=f"Jd ({sweep})",
+                line=dict(color="blue", **style[sweep]),
+            ))
+            fig.add_trace(go.Scatter(
+                x=vgs, y=gm,
+                mode="lines",
+                name=f"gm ({sweep})",
+                yaxis="y2",
+                line=dict(color="red", **style[sweep]),
+            ))
+
+        fig.update_layout(
+            xaxis=dict(title="Vgs [V]"),
+            yaxis=dict(title="Jd [mA/mm]"),
+            yaxis2=dict(
+                title="gm [mS/mm]",
+                overlaying="y",
+                side="right",
+            ),
+        )
+
+        PlotlyStyle.apply_paper_style(fig)
+
+        fig_json = fig.to_json()
+        if not isinstance(fig_json, str):
+            raise Exception("Fuck")
+        return fig_json

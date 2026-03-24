@@ -4,7 +4,6 @@ import xarray as xr
 from .model import TransistorModel, TransistorHysteresisModel
 
 class Analyzer:
-    """測定"""
 
     @classmethod
     def ID(
