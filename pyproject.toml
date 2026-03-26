@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "excel-table==0.1.6",
+    "excel-table==0.1.7",
     "plotly>=6.6.0",
     "streamlit>=1.55.0",
     "funcexpr_xr>=0.1.2",

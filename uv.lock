@@ -188,17 +188,26 @@ wheels = [
 
 [[package]]
 name = "excel-table"
-version = "0.1.6"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.7"
+source = { url = "https://files.pythonhosted.org/packages/10/7e/df3856abc592997b5106b603abdc2d5e146dbc15b10acf2fbe8be9258835/excel_table-0.1.7-py3-none-any.whl" }
 dependencies = [
     { name = "openpyxl" },
     { name = "pydantic" },
     { name = "xlsxwriter" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a9/72/d6f8af4242972fbc70d18fc38e8a6167cd08ead6e580471e0e59daf41163/excel_table-0.1.6.tar.gz", hash = "sha256:afb87aba9ff8039e1d3c0eced306e0f6a952f7e550d5228c01333ccf2c95dbd2", size = 163041, upload-time = "2026-03-24T14:46:05.496Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9c/aa/0155597a66c1fb5b86c30240e310d12a80c412d30aef78886b4551512e48/excel_table-0.1.6-py3-none-any.whl", hash = "sha256:7f3880a9f9d605145ef05d38dde15177a60172054f57d14b67592f284177008a", size = 29427, upload-time = "2026-03-24T14:46:08.214Z" },
+    { url = "https://files.pythonhosted.org/packages/10/7e/df3856abc592997b5106b603abdc2d5e146dbc15b10acf2fbe8be9258835/excel_table-0.1.7-py3-none-any.whl", hash = "sha256:af0ed3ac455dd2df17610062415f545b2c2505cdb7434b20c127abf0dee57775" },
 ]
+
+[package.metadata]
+requires-dist = [
+    { name = "openpyxl", specifier = ">=3.1" },
+    { name = "pydantic", specifier = ">=2.0" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
+    { name = "xlsxwriter", specifier = ">=3.1" },
+]
+provides-extras = ["dev"]
 
 [[package]]
 name = "excel-table-demo"
@@ -215,7 +224,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "excel-table", specifier = "==0.1.6" },
+    { name = "excel-table", url = "https://files.pythonhosted.org/packages/10/7e/df3856abc592997b5106b603abdc2d5e146dbc15b10acf2fbe8be9258835/excel_table-0.1.7-py3-none-any.whl" },
     { name = "funcexpr-xr", specifier = ">=0.1.2" },
     { name = "numpy", specifier = ">=2.4.3" },
     { name = "plotly", specifier = ">=6.6.0" },
